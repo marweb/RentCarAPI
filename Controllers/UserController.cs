@@ -82,16 +82,22 @@ namespace rentcar.Controllers
             try
             {
 
-                if (id != user.Id)
-                {
-                    return BadRequest();
-                }
+                var UserData = _context.Users.FirstOrDefault(s => s.Id.Equals(id));
+                UserData.Name = user.Name;
+                UserData.Email = user.Email;
+                UserData.Phone = user.Phone;
+                UserData.Direccion = user.Direccion;
+                UserData.Status = user.Status;
 
-                _context.Entry(user).State = EntityState.Modified;
-                _context.Update(user);
+                var isNameModified = _context.Entry(UserData).Property("Name").IsModified;
+                var isEmailModified = _context.Entry(UserData).Property("Email").IsModified;
+                var isPhoneModified = _context.Entry(UserData).Property("Phone").IsModified;
+                var isDireccionModified = _context.Entry(UserData).Property("Direccion").IsModified;
+                var isStatusModified = _context.Entry(UserData).Property("Status").IsModified;
+
                 _context.SaveChanges();
 
-                return Ok(user);
+                return NoContent();
 
             }
             catch (Exception ex)

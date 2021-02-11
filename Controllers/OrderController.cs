@@ -99,16 +99,26 @@ namespace rentcar.Controllers
             try
             {
 
-                if (id != order.Id)
-                {
-                    return BadRequest();
-                }
+                var OrderData = _context.Orders.FirstOrDefault(s => s.Id.Equals(id));
+                OrderData.Agencia = order.Agencia;
+                OrderData.FechaInicioAlquiler = order.FechaInicioAlquiler;
+                OrderData.FechaFinAlquiler = order.FechaFinAlquiler;
+                OrderData.Status = order.Status;
+                OrderData.CreadoPor = order.CreadoPor;
+                OrderData.CarId = order.CarId;
+                OrderData.UserId = order.UserId;
 
-                _context.Entry(order).State = EntityState.Modified;
-                _context.Update(order);
+                var isAgenciaModified = _context.Entry(OrderData).Property("Agencia").IsModified;
+                var isFechaInicioAlquilerModified = _context.Entry(OrderData).Property("FechaInicioAlquiler").IsModified;
+                var isFechaFinAlquilerModified = _context.Entry(OrderData).Property("FechaFinAlquiler").IsModified;
+                var isStatusModified = _context.Entry(OrderData).Property("Status").IsModified;
+                var isCreadoPorModified = _context.Entry(OrderData).Property("CreadoPor").IsModified;
+                var isCarIdModified = _context.Entry(OrderData).Property("CarId").IsModified;
+                var isUserIdModified = _context.Entry(OrderData).Property("UserId").IsModified;
+
                 _context.SaveChanges();
 
-                return Ok(order);
+                return NoContent();
 
             }
             catch (Exception ex)

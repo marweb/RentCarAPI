@@ -163,8 +163,8 @@ Update Car
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ JSON Updated Object }`
+  * **Code:** 204 <br />
+    **Content:** `{}`
  
    ---
 
@@ -332,8 +332,8 @@ Update User
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ JSON Updated Object }`
+  * **Code:** 204 <br />
+    **Content:** `{}`
  
    ---
 
@@ -541,8 +541,8 @@ Update Order
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ JSON Updated Object }`
+  * **Code:** 204 <br />
+    **Content:** `{}`
  
    ---
 

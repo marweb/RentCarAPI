@@ -96,6 +96,8 @@ namespace rentcar.Controllers
             }
         }
 
+
+
         // PUT api/<CarController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromForm] Models.Car car)
@@ -103,22 +105,30 @@ namespace rentcar.Controllers
             try
             {
 
-                if(id != car.Id)
-                {
-                    return BadRequest();
-                }
+                var CarData = _context.Cars.FirstOrDefault(s => s.Id.Equals(id));
+                CarData.Name = car.Name;
+                CarData.Brand = car.Brand;
+                CarData.Color = car.Color;
+                CarData.Stock = car.Stock;
+                CarData.Status = car.Status;
 
-                _context.Entry(car).State = EntityState.Modified;
-                _context.Update(car);
+                var isNameModified = _context.Entry(CarData).Property("Name").IsModified;
+                var isBrandModified = _context.Entry(CarData).Property("Brand").IsModified;
+                var isColorModified = _context.Entry(CarData).Property("Color").IsModified;
+                var isStockModified = _context.Entry(CarData).Property("Stock").IsModified;
+                var isStatusModified = _context.Entry(CarData).Property("Status").IsModified;
+
                 _context.SaveChanges();
 
-                return Ok(car);
+                return NoContent();
 
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
+
         }
 
         // DELETE api/<CarController>/5
